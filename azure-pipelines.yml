@@ -1,0 +1,39 @@
+# 1. ¿Cuándo se ejecuta? (Triggers)
+trigger:
+  - main
+
+# 2. ¿En qué máquina se ejecuta? (Pool)
+pool:
+  vmImage: 'ubuntu-latest' # Máquina virtual Linux alojada por Microsoft
+
+# 3. ¿Qué pasos debe ejecutar? (Steps)
+steps:
+# PASO 1: Instalar Node.js
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Install Node.js'
+
+# PASO 2: Instalar dependencias de NPM (Equivalente al pip install)
+- script: npm ci
+  displayName: 'Install dependencies'
+
+# PASO 3: Instalar los navegadores de Playwright
+- script: npx playwright install --with-deps
+  displayName: 'Install Playwright Browsers'
+
+# PASO 4: Ejecutar las pruebas
+- script: npx playwright test
+  displayName: 'Run Playwright tests'
+  env:
+    # Inyección de variables de entorno (Secretos)
+    API_URL_TELEMETRY: $(ApiUrlTelemetry) 
+
+# PASO 5: Guardar el reporte HTML como evidencia (Artifact)
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: playwright-report
+    artifact: playwright-report
+    publishLocation: 'pipeline'
+  condition: always() # Asegura que el reporte se suba incluso si los tests fallan
+  displayName: 'Publish Playwright Report'
