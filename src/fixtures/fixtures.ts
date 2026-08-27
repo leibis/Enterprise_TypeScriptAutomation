@@ -8,7 +8,7 @@ type Fixtures = {
 };
 
 export const test = base.extend<Fixtures>({
-  testUser: async (_fixtures, use) => {
+  testUser: async ({}, use) => { 
     await use(standardUser);
   },
 

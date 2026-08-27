@@ -30,6 +30,14 @@ export default defineConfig([
     },
   },
 
+  // 👇 ADD THIS BLOCK HERE (for Playwright fixtures)
+  {
+    files: ["src/fixtures/**/*.ts"],
+    rules: {
+      "no-empty-pattern": "off",
+    },
+  },
+
   // Optional: ignore generated/output folders
   {
     ignores: ["node_modules/**", "dist/**", "playwright-report/**", "test-results/**"],
