@@ -1,4 +1,4 @@
-import { type Page, type Locator, expect } from '@playwright/test';
+import { type Page, type Locator } from '@playwright/test';
 
 export class PlaywrightDemoPage {
     // 1. Definición estricta de variables con sus tipos de datos (TypeScript)
