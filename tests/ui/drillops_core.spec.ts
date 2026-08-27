@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { DrillOpsDashboardPage } from '../pages/DrillOpsDashboardPage.js';
-import { standardUser } from '../data/users.js';
+import { DrillOpsDashboardPage } from '../../src/pom/DrillOpsDashboardPage';
+import { standardUser } from '../../src/data/users';
 
 test.describe('DrillOps Dashboard Test Suite', () => {
     
@@ -16,12 +16,12 @@ test.describe('DrillOps Dashboard Test Suite', () => {
     });
 
     // 2. PRUEBA 1 (El login ya se hizo automáticamente por el beforeEach)
-    test('Validate inventory loads after login', async () => {
+    test('@smokeValidate inventory loads after login', async () => {
         await expect(dashboardPage.inventoryContainer).toBeVisible({ timeout: 10000 });
     });
 
     // 3. PRUEBA 2 (El login se vuelve a hacer en un navegador limpio automáticamente)
-    test('Validate cart functionality', async ({ page }) => {
+    test('@smoke Validate cart functionality', async ({ page }) => {
         // Hacemos clic en el primer botón "Add to cart"
         const addToCartButton = page.locator('.btn_inventory').first();
         await addToCartButton.click();

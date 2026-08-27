@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { PlaywrightDemoPage } from '../pages/PlaywrightDemoPage.js';
+import { PlaywrightDemoPage } from '../../src/pom/PlaywrightDemoPage';
 
-test('Validate search functionality using POM architecture', async ({ page }) => {
+test('@regression @ui Validate search functionality using POM architecture', async ({ page }) => {
     // 1. Instanciamos la página usando nuestra arquitectura POM
     const demoPage = new PlaywrightDemoPage(page);
 

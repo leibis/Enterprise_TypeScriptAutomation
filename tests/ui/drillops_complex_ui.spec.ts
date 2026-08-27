@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('Advanced UI - Interacting with iFrames and Dynamic Tables', async ({ page }) => {
+test('@regression @ui Advanced UI - Interacting with iFrames and Dynamic Tables', async ({ page }) => {
     
     // 1. SETUP DEL MOCK: 
     // Como no tenemos acceso al servidor real de DrillOps, vamos a inyectar directamente en el 
