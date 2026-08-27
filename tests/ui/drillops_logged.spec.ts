@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { DrillOpsDashboardPage } from '../pages/DrillOpsDashboardPage.js';
+import { DrillOpsDashboardPage } from '../../src/pom/DrillOpsDashboardPage';
 
 // Para todos los tests que estén dentro de este archivo, antes de abrir el navegador, inyéctale en su memoria las cookies de sesión guardadas en el archivo user.json
 test.use({ storageState: 'playwright/.auth/user.json' });
 
-test('Logged Test - Validate dashboard is pre-authenticated', async ({ page }) => {
+test('@smoke Logged Test - Validate dashboard is pre-authenticated', async ({ page }) => {
     console.log("🚀 [Logged Test] Abriendo la página del inventario directamente...");
     
     // Vamos directo a la página de inventario (sin pasar por el login)

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('Network Interception - Mocking DrillOps Telemetry API', async ({ page }) => {
+test('@regression @uiNetwork Interception - Mocking DrillOps Telemetry API', async ({ page }) => {
     
     // 1. INTERCEPCIÓN DE RED (ROUTE FULFILLMENT):
     // Interceptamos la llamada a la API de telemetría del pozo petrolero

@@ -1,0 +1,24 @@
+🎯 Tarjeta rápida — Playwright Core (60s)
+“Playwright runner es el motor que descubre, ejecuta y reporta pruebas, con paralelismo, retries y trace.
+Los projects me permiten correr la misma suite en varios navegadores o configuraciones sin duplicar tests.
+Las fixtures son dependencias inyectadas por test para setup reusable y limpio, como page, testUser o un dashboard autenticado.
+POM encapsula locators y acciones por pantalla para mantener tests legibles y mantenibles.
+
+Diferencio claramente test de login vs test preautenticado:
+el de login valida autenticación; el preautenticado valida funcionalidades después del login.
+
+storageState reduce tiempo y fragilidad porque evita repetir login en cada test, disminuye pasos y puntos de falla, y estandariza sesión desde globalSetup.
+
+No uso waitForTimeout porque es espera ciega y genera flakiness; prefiero esperas por condición real con expect y waitFor sobre locators o URL.”
+
+Modo refuerzo inmediato (obligatorio, 12 min)
+Memoriza estas 3 frases (literal):
+
+StorageState
+“storageState stores authenticated browser state and reuses it per test context for faster, more stable post-login testing.”
+
+Anti-flaky
+“I synchronize tests with real UI conditions using Playwright assertions with auto-retry, not fixed sleeps.”
+
+Architecture
+“I keep setup in fixtures/global setup so tests focus on business behavior, not repeated plumbing.”
