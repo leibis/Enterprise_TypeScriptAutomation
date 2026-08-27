@@ -1,0 +1,48 @@
+name: PR Gate
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  quality-gate:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Descarga código del PR.
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Configura Node.js.
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Instala dependencias exactas.
+      - name: Install dependencies
+        run: npm ci
+
+      # Instala browsers/deps para Playwright.
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
+      # Gate 1: calidad estática.
+      - name: Lint
+        run: npm run lint
+
+      # Gate 2: tipos.
+      - name: Typecheck
+        run: npm run typecheck
+
+      # Gate 3: pruebas críticas.
+      - name: Smoke tests
+        run: npx playwright test --grep "@smoke"
+
+      # Sube reporte para diagnóstico aunque falle.
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-pr
+          path: playwright-report
