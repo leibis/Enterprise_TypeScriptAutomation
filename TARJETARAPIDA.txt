@@ -22,3 +22,37 @@ Anti-flaky
 
 Architecture
 “I keep setup in fixtures/global setup so tests focus on business behavior, not repeated plumbing.”
+
+
+------
+Day 1 — Lo que debes tener clarísimo (CI Gates + disciplina QA)
+1) Concepto central
+Un PR Gate protege main: ningún cambio entra si no pasa calidad mínima automática.
+
+2) Qué valida un PR Gate sólido
+Lint (estándar de código)
+Typecheck (contratos TS)
+Smoke tests (flujo crítico rápido)
+3) Diferencia clave que te pueden preguntar
+PR pipeline: rápido, bloqueante, confianza inmediata.
+Main regression: más amplia/profunda, después del merge.
+4) Git que debes explicar sin dudar
+add = preparo cambios
+commit = guardo snapshot local
+push = subo commits al remoto
+5) Señales de madurez técnica (lo que hiciste hoy)
+Resolver dependency conflicts (ERESOLVE) sin hacks peligrosos.
+Entender peer dependencies (ej: TS7 vs typescript-eslint).
+Corregir configuración de ESLint flat config moderna.
+Distinguir warning vs failure en GitHub Actions.
+6) Playwright + lint (pregunta típica)
+Fixtures de Playwright a veces requieren object destructuring en primer argumento; eso puede chocar con no-empty-pattern.
+Solución profesional: override específico por carpeta, no desactivar reglas globalmente.
+
+7) CI hygiene (nivel entrevista)
+Fijar versión de Node explícita (setup-node, ej. 24).
+upload-artifact con if-no-files-found: ignore para no ensuciar resultados.
+Mantener workflows limpios, rápidos y confiables.
+8) Frase de impacto para entrevista
+“Implementé quality gates en PR con lint/typecheck/smoke para bloquear regresiones tempranas, y separé regression en main para balancear velocidad y cobertura.”
+

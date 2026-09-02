@@ -1,31 +1,60 @@
-import { type Page, type Locator } from '@playwright/test';
-import { type TestUser } from '../data/users.js';   
+import { type Page, type Locator, expect } from '@playwright/test';
+import { type TestUser } from '../data/users';
 
+/**
+ * Page Object Model del dashboard de DrillOps/SauceDemo.
+ * Encapsula selectores y acciones de login/inventario.
+ */
 export class DrillOpsDashboardPage {
-    readonly page: Page;
-    readonly usernameInput: Locator;
-    readonly passwordInput: Locator; // ⬅️ 1. NUEVA VARIABLE
-    readonly loginButton: Locator;
-    readonly inventoryContainer: Locator;
+  /** Instancia de Playwright Page. */
+  private readonly page: Page;
 
-    constructor(page: Page) {
-        this.page = page;
-        // Usamos la app de práctica real de QA (SauceDemo)
-        this.usernameInput = page.locator('#user-name');
-        this.passwordInput = page.locator('#password');
-        this.loginButton = page.locator('#login-button');
-        this.inventoryContainer = page.locator('.inventory_list');
-    }
+  /** Campo username en login. */
+  readonly usernameInput: Locator;
 
-    async navigateToDashboard() {
-        await this.page.goto('https://www.saucedemo.com/');
-    }
+  /** Campo password en login. */
+  readonly passwordInput: Locator;
 
-    async login(user: TestUser) {
-        await this.usernameInput.fill(user.username); // ⬅️ 2. USAMOS LA VARIABLE LIMPIA EN LUGAR DE BUSCAR AL VUELO
-                // ⬅️ 3. AHORA SÍ: USAMOS LA VARIABLE LIMPIA EN LUGAR DE BUSCAR AL VUELO
-        await this.passwordInput.fill(user.password); // ⬅️ 4. AHORA SÍ: USAMOS LA VARIABLE LIMPIA EN LUGAR DE BUSCAR AL VUELO
-        
-        await this.loginButton.click();
-    }
+  /** Botón de autenticación. */
+  readonly loginButton: Locator;
+
+  /** Contenedor principal de inventario (post-login). */
+  readonly inventoryContainer: Locator;
+
+  /**
+   * Constructor del POM.
+   * @param page Página activa del navegador.
+   */
+  constructor(page: Page) {
+    this.page = page;
+    this.usernameInput = page.locator('[data-test="username"]');
+    this.passwordInput = page.locator('[data-test="password"]');
+    this.loginButton = page.locator('[data-test="login-button"]');
+    this.inventoryContainer = page.locator('[data-test="inventory-container"]');
+  }
+
+  /**
+   * Navega al dashboard/login usando URL base parametrizada.
+   * @param baseURL URL del sitio a probar.
+   */
+  async navigateToDashboard(baseURL: string): Promise<void> {
+    await this.page.goto(baseURL);
+  }
+
+  /**
+   * Ejecuta login con credenciales de usuario.
+   * @param user Usuario de prueba tipado.
+   */
+  async login(user: TestUser): Promise<void> {
+    await this.usernameInput.fill(user.username);
+    await this.passwordInput.fill(user.password);
+    await this.loginButton.click();
+  }
+
+  /**
+   * Verifica que el inventario esté visible tras login.
+   */
+  async assertInventoryVisible(): Promise<void> {
+    await expect(this.inventoryContainer).toBeVisible({ timeout: 10000 });
+  }
 }
