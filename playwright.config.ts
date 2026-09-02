@@ -15,7 +15,9 @@ export default defineConfig({
     baseURL: 'https://www.saucedemo.com',
 
     // Habilitamos trace al primer retry para diagnóstico.
-    trace: 'on-first-retry',
+    trace: 'on-first-retry', // O 'retain-on-failure'
+    screenshot: 'on',
+    video: 'retain-on-failure',
   },
 
   // Ejemplo de proyectos multi-browser.

@@ -31,10 +31,18 @@ jobs:
       - name: Regression tests
         run: npx playwright test --grep "@regression"
 
-      # Publica reporte para RCA.
-      - name: Upload Playwright report
+      # 1. Publica el reporte HTML visual (Resumen ejecutivo)
+      - name: Upload Playwright HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report-main
-          path: playwright-report
+          path: playwright-report/
+
+      # 2. Publica la evidencia forense (Trace Viewer / Debugging profundo)
+      - name: Upload Playwright Test Results & Traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results
+          path: test-results/
