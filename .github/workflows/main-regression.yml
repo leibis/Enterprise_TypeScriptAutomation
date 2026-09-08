@@ -29,6 +29,8 @@ jobs:
 
       # Ejecuta regresión.
       - name: Regression tests
+        env:
+          AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
         run: npx playwright test --grep "@regression"
 
       # 1. Publica el reporte HTML visual (Resumen ejecutivo)
