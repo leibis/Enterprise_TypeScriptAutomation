@@ -40,6 +40,12 @@ jobs:
       - name: Smoke tests
         run: npx playwright test --grep "@smoke"
 
+      # Gate 4: pruebas con Cypress.
+      - name: Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+
       # Sube reporte para diagnóstico aunque falle.
       - name: Upload Playwright report
         if: always()
